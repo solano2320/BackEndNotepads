@@ -5,6 +5,7 @@ from rest_framework import  status
 from rest_framework_simplejwt.tokens import RefreshToken
 from Users.serializer import SignUpInputSerializer, SignUpOutputSerializer
 from Users.serializer import LogInInputSerializer, LogInOutputSerializer
+from Users.serializer import ProfileOutputSerializer
 
 from Users.models import CustomUser
 
@@ -77,3 +78,16 @@ class Login(APIView):
             "refresh_token": str(refresh),
         })
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+    
+
+class myProfile(APIView):
+
+    def get(self, request):
+        serializer = ProfileOutputSerializer({
+            "username": request.user.username,
+            "email": request.user.email,
+            "birth_date": request.user.birth_date
+        })
+    
+        return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+

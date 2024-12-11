@@ -27,3 +27,10 @@ class LogInOutputSerializer(serializers.Serializer):
     email = serializers.CharField()
     accessToken = serializers.CharField(source="access_token")
     refreshToken = serializers.CharField(source="refresh_token")
+
+
+class ProfileOutputSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    email = serializers.CharField()
+    birthDate = serializers.DateField(source="birth_date")
+
