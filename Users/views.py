@@ -6,6 +6,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from Users.serializer import SignUpInputSerializer, SignUpOutputSerializer
 from Users.serializer import LogInInputSerializer, LogInOutputSerializer
 from Users.serializer import ProfileOutputSerializer
+from django.contrib.auth.views import PasswordResetView
+from django.urls import reverse_lazy
 
 from Users.models import CustomUser
 
@@ -90,4 +92,14 @@ class myProfile(APIView):
         })
     
         return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+    
+# views.py
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = "registration/password_reset_form.html"  # La plantilla del formulario de recuperación
+    email_template_name = "registration/password_reset_email.html"  # La plantilla del correo de recuperación
+    html_email_template_name = "registration/password_reset_email.html"  # Usar HTML en el correo
+    subject_template_name = "registration/password_reset_subject.txt"  # Asunto del correo
+    success_url = reverse_lazy('password_reset_done')  # Redirigir a la página de éxito después del reset
+
 
